@@ -1,138 +1,186 @@
 package airline.management.system;
 
-import java.awt.EventQueue;
-
+import javax.swing.text.MaskFormatter;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
 import javax.swing.*;
 
 public class Add_Customer extends JFrame{ //Third Frame
 
     
-	JTextField textField,textField_1,textField_2,textField_3,textField_4,textField_5,textField_6;
+	JTextField textField_2,textField_6;
+        JFormattedTextField cnicTextField, phoneNumberTextField, passportTextField, nationalityTextField, nameTextField;
 
-        public Add_Customer(){
-            getContentPane().setForeground(Color.BLUE);
-            getContentPane().setBackground(Color.WHITE);
-            setTitle("ADD CUSTOMER DETAILS");
-		 
-            setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            setSize(778,486);
-            getContentPane().setLayout(null);
-			
-            JLabel Passportno = new JLabel("PASSPORT NO");
-            Passportno.setFont(new Font("Tahoma", Font.PLAIN, 17));
-            Passportno.setBounds(60, 80, 150, 27);
-            add(Passportno);
-            
-            textField = new JTextField();
-            textField.setBounds(200, 80, 150, 27);
-            add(textField);
-			
-            JButton Next = new JButton("SAVE");
-            Next.setBounds(200, 420, 150, 30);
-            Next.setBackground(Color.BLACK);
-            Next.setForeground(Color.WHITE);
-            add(Next);
-			
-            JLabel Pnrno = new JLabel("PNR NO");
-            Pnrno.setFont(new Font("Tahoma", Font.PLAIN, 17));
-            Pnrno.setBounds(60, 120, 150, 27);
-            add(Pnrno);
-			
-            textField_1 = new JTextField();
-            textField_1.setBounds(200, 120, 150, 27);
-            add(textField_1);
-            
-            JLabel Address = new JLabel("ADDRESS");
-            Address.setFont(new Font("Tahoma", Font.PLAIN, 17));
-            Address.setBounds(60, 170, 150, 27);
-            add(Address);
-			
-            textField_2 = new JTextField();
-            textField_2.setBounds(200, 170, 150, 27);
-            add(textField_2);
-            		
-            JLabel Nationality = new JLabel("NATIONALITY");
-            Nationality.setFont(new Font("Tahoma", Font.PLAIN, 17));
-            Nationality.setBounds(60, 220, 150, 27);
-            add(Nationality);
-			
-            textField_3 = new JTextField();
-            textField_3.setBounds(200, 220, 150, 27);
-            add(textField_3);
-	
-            JLabel Name = new JLabel("NAME");
-            Name.setFont(new Font("Tahoma", Font.PLAIN, 17));
-            Name.setBounds(60, 270, 150, 27);
-            add(Name);
-	
-            textField_4 = new JTextField();
-            textField_4.setBounds(200, 270, 150, 27);
-            add(textField_4);
-	
-            JLabel Gender = new JLabel("GENDER");
-            Gender.setFont(new Font("Tahoma", Font.PLAIN, 17));
-            Gender.setBounds(60, 320, 150, 27);
-            add(Gender);
-		
-            JRadioButton NewRadioButton = new JRadioButton("MALE");
-            NewRadioButton.setBackground(Color.WHITE);
-            NewRadioButton.setBounds(200, 320, 70, 27);
-            add(NewRadioButton);
-	
-            JRadioButton Female = new JRadioButton("FEMALE");
-            Female.setBackground(Color.WHITE);
-            Female.setBounds(280, 320, 70, 27);
-            add(Female);
-            
-            JLabel Phno = new JLabel("PH NO");
-            Phno.setFont(new Font("Tahoma", Font.PLAIN, 17));
-            Phno.setBounds(60, 370, 150, 27);
-            add(Phno);
-			
-            textField_5 = new JTextField();
-            textField_5.setBounds(200, 370, 150, 27);
-            add(textField_5);
-	
-            setVisible(true);
-	
-            JLabel AddPassengers = new JLabel("ADD CUSTOMER DETAILS");
-            AddPassengers.setForeground(Color.BLUE);
-            AddPassengers.setFont(new Font("Tahoma", Font.PLAIN, 31));
-            AddPassengers.setBounds(420, 24, 442, 35);
-            add(AddPassengers);
-			
-    
-            JLabel Flightcode = new JLabel("FLIGHT CODE");
-            Flightcode.setFont(new Font("Tahoma", Font.PLAIN, 17));
-            Flightcode.setBounds(60, 30, 150, 27);
-            add(Flightcode);
+        public Add_Customer() {
+        setSize(1200, 800);
+        setLocationRelativeTo(null);
+        setVisible(true);
 
-            textField_6 = new JTextField();
-            textField_6.setBounds(200, 30, 150, 27);
-            add(textField_6);
-            
-            
-            ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("airline/management/system/icon/emp.png"));
-            JLabel image = new JLabel(i1);
-            image.setBounds(450,80,280,410);
-            add(image);
+        JPanel headerPanel = new JPanel(new GridBagLayout());
+        headerPanel.setBackground(Color.BLUE);
+        headerPanel.setPreferredSize(new Dimension(1200, 100));
 
-            
-            Next.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent ae){
-                    String passport_No = textField.getText();
-                    String pnr_no = textField_1.getText();
+        JLabel headerLabel = new JLabel("Add New Customer Booking");
+        headerLabel.setForeground(Color.WHITE);
+        headerLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
+
+        GridBagConstraints gbcHeader = new GridBagConstraints();
+        gbcHeader.gridx = 0;
+        gbcHeader.gridy = 0;
+        headerPanel.add(headerLabel, gbcHeader);
+
+        add(headerPanel, BorderLayout.NORTH);
+
+        JPanel contentPanel = new JPanel(null);
+        contentPanel.setBackground(Color.WHITE);
+        contentPanel.setBounds(0, 70, 900, 580);
+        add(contentPanel);
+
+        JLabel Passportno = new JLabel("Passport No:");
+        Passportno.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        Passportno.setBounds(50, 100, 200, 30);
+        contentPanel.add(Passportno);
+
+        try {
+            MaskFormatter cnicFormatter = new MaskFormatter("LL-#######");
+            passportTextField = new JFormattedTextField(cnicFormatter);
+            passportTextField.setBounds(220, 100, 200, 30);
+            contentPanel.add(passportTextField);
+
+            passportTextField.setInputVerifier(new InputVerifier() {
+                @Override
+                public boolean verify(JComponent input) {
+                    JFormattedTextField textField = (JFormattedTextField) input;
+                    String passport = textField.getText().replaceAll("-", "");
+
+                    if (passport.length() == 9) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        JLabel Pnrno = new JLabel("CNIC Number:");
+        Pnrno.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        Pnrno.setBounds(50, 150, 200, 30);
+        contentPanel.add(Pnrno);
+
+        try {
+            MaskFormatter cnicFormatter = new MaskFormatter("#####-#######-#");
+            cnicTextField = new JFormattedTextField(cnicFormatter);
+            cnicTextField.setBounds(220, 150, 200, 30);
+            contentPanel.add(cnicTextField);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JLabel Address = new JLabel("Complete Address:");
+        Address.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        Address.setBounds(50, 200, 200, 30);
+        contentPanel.add(Address);
+
+        textField_2 = new JTextField();
+        textField_2.setBounds(220, 200, 200, 30);
+        contentPanel.add(textField_2);
+
+        JLabel Nationality = new JLabel("Nationality:");
+        Nationality.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        Nationality.setBounds(50, 250, 200, 30);
+        contentPanel.add(Nationality);
+
+         try {
+            MaskFormatter nationalityFormatter = new MaskFormatter("***********************");
+            nationalityTextField = new JFormattedTextField(nationalityFormatter);
+            nationalityTextField.setBounds(220, 250, 200, 30);
+            contentPanel.add(nationalityTextField);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JLabel Name = new JLabel("Full Name:");
+        Name.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        Name.setBounds(50, 300, 200, 30);
+        contentPanel.add(Name);
+        try {
+            MaskFormatter nationalityFormatter = new MaskFormatter("**************************");
+            nameTextField = new JFormattedTextField(nationalityFormatter);
+            nameTextField.setBounds(220, 300, 200, 30);
+            contentPanel.add(nameTextField);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JLabel Gender = new JLabel("Gender:");
+        Gender.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        Gender.setBounds(50, 350, 200, 30);
+        contentPanel.add(Gender);
+
+        JRadioButton NewRadioButton = new JRadioButton("Male");
+        NewRadioButton.setBackground(Color.WHITE);
+        NewRadioButton.setBounds(220, 350, 70, 30);
+        contentPanel.add(NewRadioButton);
+
+        JRadioButton Female = new JRadioButton("Female");
+        Female.setBackground(Color.WHITE);
+        Female.setBounds(300, 350, 80, 30);
+        contentPanel.add(Female);
+
+        JLabel Phno = new JLabel("Phone Number:");
+        Phno.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        Phno.setBounds(50, 400, 200, 30);
+        contentPanel.add(Phno);
+        
+        try {
+            MaskFormatter cnicFormatter = new MaskFormatter("####-#######");
+            phoneNumberTextField = new JFormattedTextField(cnicFormatter);
+            phoneNumberTextField.setBounds(220, 400, 200, 30);
+            contentPanel.add(phoneNumberTextField);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+
+        JLabel Flightcode = new JLabel("Flight Code:");
+        Flightcode.setFont(new Font("Tahoma", Font.PLAIN, 17));
+        Flightcode.setBounds(50, 50, 200, 30);
+        contentPanel.add(Flightcode);
+
+        textField_6 = new JTextField();
+        textField_6.setBounds(220, 50, 200, 30);
+        contentPanel.add(textField_6);
+        
+        
+        JButton Next = new JButton("SAVE");
+        Next.setBounds(220, 520, 120, 40);
+        Next.setBackground(Color.BLUE);
+        Next.setForeground(Color.WHITE);
+        contentPanel.add(Next);
+
+
+        Next.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                   String passport_No = passportTextField.getText();
+                    String pnr_no = cnicTextField.getText();
                     String address =  textField_2.getText();
-                    String nationality = textField_3.getText();
-                    String name = textField_4.getText();
+                    String nationality = nationalityTextField.getText();
+                    String name = nameTextField.getText();
                     String fl_code = textField_6.getText();
                    
                     String gender = null;
-                    String ph_no = textField_5.getText();
+                    String ph_no = phoneNumberTextField.getText();
                     
                     if(NewRadioButton.isSelected()){
                         gender = "male";
@@ -141,7 +189,14 @@ public class Add_Customer extends JFrame{ //Third Frame
                         gender = "female";
                     }
                     
-                    try {
+                    if (passport_No.isEmpty() || pnr_no.isEmpty() || address.isEmpty() || nationality.isEmpty()
+                              || name.isEmpty() || fl_code.isEmpty() || gender == null || ph_no.isEmpty()) {
+                          JOptionPane.showMessageDialog(null, "Please fill in all mandatory fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                          return; // Exit the method if any mandatory field is empty
+                    }
+
+                    
+                   try {
                         conn c = new conn();
                         String str = "INSERT INTO passenger values( '"+pnr_no+"', '"+address+"', '"+nationality+"','"+name+"', '"+gender+"', '"+ph_no+"','"+passport_No+"', '"+fl_code+"')";
                         
@@ -152,14 +207,12 @@ public class Add_Customer extends JFrame{ //Third Frame
                     } catch (Exception e) {
                         e.printStackTrace();
         	    }
-		}
-            });
-			
-            setSize(900,600);
-            setVisible(true);
-            setLocation(400,200);
-			
-	}
+            }
+        });
+
+        setVisible(true);
+    }
+
         
     public static void main(String[] args){
         new Add_Customer();

@@ -32,6 +32,8 @@ public class Login extends JFrame implements ActionListener{
         headerPanel.add(headerLabel, gbcHeader);
 
         add(headerPanel, BorderLayout.NORTH);
+        
+        //white panel
 
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setBackground(Color.WHITE);
@@ -83,20 +85,19 @@ public class Login extends JFrame implements ActionListener{
         setVisible(true);
     }
     
-    
+
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == loginButton) {
             performLogin();
         } else if (ae.getSource() == closeButton) {
-            clearFields();
+            confirmExit();
         }
     }
 
     private void performLogin() {
         String email = emailField.getText();
         String password = passwordField.getText();
-
         try {
             conn c1 = new conn();  
             String str = "select * from login where username = '"+email+"' and password = '"+password+"'";
@@ -113,10 +114,6 @@ public class Login extends JFrame implements ActionListener{
         }
     }
 
-    private void clearFields() {
-        emailField.setText("");
-        passwordField.setText("");
-    }
 
     private void confirmExit() {
         int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Exit Confirmation", JOptionPane.YES_NO_OPTION);

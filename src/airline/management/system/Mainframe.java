@@ -20,7 +20,10 @@ public class Mainframe extends JFrame{
    
     private void initialize() {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setLayout(new BorderLayout());
+    setSize(1200, 800);
+    setLocationRelativeTo(null); 
+    setVisible(true);
+
     setTitle("Cloud Wings Airline Management System");
 
     // Header
@@ -46,29 +49,15 @@ public class Mainframe extends JFrame{
     JPanel buttonPanel = new JPanel(new GridLayout(0, 3, 10, 10));
     buttonPanel.setBackground(Color.WHITE);
 
-    addButton(buttonPanel, "Flight Info", ae -> new Flight_Info());
-    addButton(buttonPanel, "Add Customer", ae -> {
-        try {
-            new Add_Customer();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    });
-    addButton(buttonPanel, "Flight Details", ae -> {
-        try {
-            new Journey_Details();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    });
-    addButton(buttonPanel, "Payment Details", ae -> {
-        try {
-            new Payment_Details();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    });
-    addButton(buttonPanel, "Cancellation", ae -> new Cancel());
+    addButton(buttonPanel, "Search Flight", ae -> new Flight_Info());
+    addButton(buttonPanel, "Search Customer", ae -> new Customer_Info());
+
+    
+    addButton(buttonPanel, "New Booking", ae -> new Add_Customer());
+    
+    addButton(buttonPanel, "Find Flights", ae -> new Journey_Details());
+
+    addButton(buttonPanel, "Add Flight", ae -> new Add_Flight());
 
     GridBagConstraints gbcCenter = new GridBagConstraints();
     gbcCenter.gridx = 0;
@@ -82,8 +71,7 @@ public class Mainframe extends JFrame{
     add(centerPanel, BorderLayout.CENTER);
     
 
-    setSize(1200, 800);
-    setVisible(true);
+   
 }
 
 
